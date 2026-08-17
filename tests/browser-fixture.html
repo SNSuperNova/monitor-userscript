@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Runtime Monitor Browser Test</title>
+  <script src="../runtime-monitor.user.js"></script>
+</head>
+<body style="margin:0;padding:40px;background:#eef3f8;font:16px system-ui;color:#183047">
+  <h1>Runtime Monitor 测试页</h1>
+  <p>页面会产生 GET、POST、OPTIONS、XHR、Storage 和 Window 测试数据。</p>
+  <script>
+    localStorage.setItem('runtime-monitor-browser-test', JSON.stringify({ enabled: true }));
+    window.runtimeMonitorBrowserTest = {
+      count: 1,
+      status: 'ready',
+      profile: { contact: { nickname: 'DeepSearchNeedle' } },
+    };
+    fetch('/tests/sample.json');
+    fetch('/tests/sample.json', { method: 'POST', body: JSON.stringify({ action: 'post-test' }) }).catch(() => {});
+    fetch('/tests/sample.json', { method: 'OPTIONS' }).catch(() => {});
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', '/tests/sample.json');
+    xhr.send();
+  </script>
+</body>
+</html>
